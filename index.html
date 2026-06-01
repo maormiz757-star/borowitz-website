@@ -1178,6 +1178,13 @@ document.getElementById('legalPopup').addEventListener('click', function(e) {
     var nav = document.querySelector('nav');
     if (nav && !nav.contains(e.target)) closeMenu();
   });
+  (function(){
+    var nav = document.querySelector('nav');
+    if (!nav) return;
+    var onScroll = function(){ nav.classList.toggle('scrolled', window.scrollY > 40); };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
 </script>
 
 <!-- ===== NAGISHLI ACCESSIBILITY WIDGET ===== -->
