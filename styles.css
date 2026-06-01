@@ -1,16 +1,28 @@
 /* ===== CSS BLOCK 1 ===== */
   :root {
-    --navy: #1C3461;
-    --blue: #2A6DB5;
-    --light-blue: #4A90C4;
-    --sky: #EAF1F8;
-    --card-bg: #EDF2F7;
+    /* Editorial-luxury palette: ivory canvas, deep navy ink, brushed-gold accent */
+    --navy: #122440;
+    --navy-deep: #0C1A2F;
+    --blue: #2F5A86;
+    --light-blue: #6E8BAA;
+    --sky: #F4F0E8;          /* warm ivory section tint */
+    --card-bg: #FBF9F4;      /* near-white card with warmth */
     --white: #FFFFFF;
-    --grey-light: #F0F4F8;
-    --grey: #8A9BB0;
-    --grey-dark: #2D3E50;
-    --gold: #B89630;
-    --text: #1C3461;
+    --ivory: #F8F5EE;        /* page canvas */
+    --grey-light: #F1EDE4;
+    --grey: #8A8475;         /* warm muted grey */
+    --grey-dark: #3A4150;
+    --gold: #B0883C;         /* brushed gold */
+    --gold-soft: #C9A86A;
+    --text: #122440;
+    --text-muted: #5C6573;
+    --hairline: rgba(18, 36, 64, 0.12);
+    --hairline-strong: rgba(18, 36, 64, 0.22);
+    --serif: 'Frank Ruhl Libre', 'Times New Roman', serif;
+    --sans: 'Heebo', sans-serif;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --shadow-soft: 0 18px 50px -28px rgba(18, 36, 64, 0.28);
+    --shadow-card: 0 10px 40px -24px rgba(18, 36, 64, 0.22);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -58,11 +70,59 @@
   html { scroll-behavior: smooth; overflow-x: hidden; }
 
   body {
-    font-family: 'Heebo', sans-serif;
+    font-family: var(--sans);
     color: var(--text);
-    background: var(--white);
+    background: var(--ivory);
     overflow-x: hidden;
     direction: rtl;
+    font-weight: 400;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* ===== EDITORIAL TYPOGRAPHY ===== */
+  h1, h2, h3, h4, .serif {
+    font-family: var(--serif);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--navy);
+  }
+  h1 { font-weight: 700; }
+
+  p { line-height: 1.8; }
+
+  ::selection { background: var(--gold); color: #fff; }
+
+  /* Eyebrow label: small, tracked, gold — used above section titles */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 32px;
+    height: 1px;
+    background: var(--gold);
+    display: inline-block;
+  }
+
+  /* Thin gold rule used as an editorial divider */
+  .rule-gold {
+    width: 64px;
+    height: 2px;
+    background: var(--gold);
+    border: 0;
+    margin: 1.2rem 0;
   }
 
   /* ===== NAVIGATION ===== */
