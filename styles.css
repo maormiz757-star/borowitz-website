@@ -314,6 +314,16 @@ button { font-family: inherit; cursor: pointer; }
 .svc:hover p { color: rgba(255,255,255,.72); }
 .svc:hover .svc-more { opacity: 1; transform: translateY(0); }
 
+/* Inactive "coming soon" service card (e.g. נחלות — pending dedicated page) */
+.svc-soon { cursor: default; }
+.svc-soon::after { display: none; }
+.svc-soon:hover { background: transparent; }
+.svc-soon:hover .svc-num { color: var(--muted-2); }
+.svc-soon:hover .svc-icon { color: var(--navy); }
+.svc-soon:hover h3 { color: var(--ink); }
+.svc-soon:hover p { color: var(--muted); }
+.svc-soon .svc-more { opacity: 1; transform: none; color: var(--muted-2); font-weight: 600; }
+
 .services-foot {
   display: grid; grid-template-columns: 1.05fr 1fr; align-items: center;
   gap: clamp(2rem,5vw,4.5rem); margin-top: clamp(2.8rem,5vw,4.5rem);
