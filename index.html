@@ -4,6 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- ===== GOOGLE TAG MANAGER =====
+     TODO: replace GTM-XXXXXXX with the real container ID before deploy.
+     GA4 + Meta Pixel + Google Ads tags are configured inside GTM (no code changes). -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
+<!-- ===== END GOOGLE TAG MANAGER ===== -->
+
 <!-- ===== SEO BASIC ===== -->
 <title>בורוביץ מזרחי שמאות מקרקעין וחקלאות בע"מ</title>
 <meta name="description" content="משרד שמאות מקרקעין מוביל בצפון. מתמחים בהיטלי השבחה, הערכות שווי, נחלות ומשקים חקלאיים, השגות על שומות רמ&quot;י ופינוי-בינוי.">
@@ -111,6 +121,11 @@
 </head>
 <body>
 
+<!-- Google Tag Manager (noscript) — TODO: replace GTM-XXXXXXX -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
 <a href="#main-content" class="skip-to-content">דלג לתוכן הראשי</a>
 
 <!-- NAVIGATION -->
@@ -124,7 +139,7 @@
       <li><a href="#services" onclick="closeMenu()">תחומי התמחות</a></li>
       <li><a href="#linkedin-posts" onclick="closeMenu()">עדכונים</a></li>
       <li><a href="#success" onclick="closeMenu()">מהשטח</a></li>
-      <li><a href="#clients" onclick="closeMenu()">לקוחות</a></li>
+      <li><a href="careers.html" onclick="closeMenu()">קריירה</a></li>
       <li><a href="#contact" class="nav-cta" onclick="closeMenu()">צור קשר</a></li>
     </ul>
     <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="תפריט ניווט" aria-expanded="false">
@@ -139,6 +154,13 @@
 <section class="hero" id="hero">
   <div class="hero-slides" id="heroSlides">
     <div class="hero-slide active"></div>
+    <div class="hero-slide"></div>
+    <div class="hero-slide"></div>
+    <div class="hero-slide"></div>
+    <div class="hero-slide"></div>
+    <div class="hero-slide"></div>
+    <div class="hero-slide"></div>
+    <div class="hero-slide"></div>
     <div class="hero-slide"></div>
     <div class="hero-slide"></div>
     <div class="hero-slide"></div>
@@ -272,14 +294,15 @@
       <p class="reveal reveal-d1">מעטפת מקצועית מלאה לבעלי נכסים, יזמים, עורכי דין, אדריכלים, קבלנים וגופים מוסדיים.</p>
     </div>
 
+    <div class="services-body">
     <div class="services-grid reveal">
-      <div class="svc" onclick="openModal('m1')">
+      <a class="svc" href="hetel-hashbacha.html" style="text-decoration:none;color:inherit">
         <span class="svc-num">01</span>
         <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 8 11 13 14 21 5"/><polyline points="16 5 21 5 21 10"/></svg></div>
         <h3>היטלי השבחה</h3>
         <p>בדיקה, חישוב והגשת השגות על שומות היטל השבחה. ייצוג מול ועדות מקומיות ומרחביות.</p>
         <span class="svc-more">קרא עוד ←</span>
-      </div>
+      </a>
       <div class="svc" onclick="openModal('m2')">
         <span class="svc-num">02</span>
         <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><circle cx="15" cy="15" r="3"/><line x1="17.5" y1="17.5" x2="21" y2="21"/></svg></div>
@@ -287,20 +310,20 @@
         <p>הערכת כל סוגי הנכסים: דירות, בתי מגורים, מבנים מסחריים, משרדים, מגרשים וקרקעות חקלאיות.</p>
         <span class="svc-more">קרא עוד ←</span>
       </div>
-      <div class="svc" onclick="openModal('m3')">
+      <a class="svc" href="shamaut-haklait.html" style="text-decoration:none;color:inherit">
         <span class="svc-num">03</span>
         <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12"/><path d="M5 12H2a10 10 0 0020 0h-3"/><path d="M8 6l4-4 4 4"/><path d="M8 12a4 4 0 008 0"/></svg></div>
         <h3>שומות חקלאיות</h3>
         <p>הערכות נזקים בגידולים ובחקלאות, סיוע בהגשת בקשה לפיצויים במסלול ירוק/אדום.</p>
         <span class="svc-more">קרא עוד ←</span>
-      </div>
-      <div class="svc" onclick="openModal('m4')">
+      </a>
+      <a class="svc" href="hasagot-rami.html" style="text-decoration:none;color:inherit">
         <span class="svc-num">04</span>
         <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></div>
         <h3>השגות על שומות רמ"י</h3>
         <p>הגשת השגות וייצוג מול רשות מקרקעי ישראל בנוגע לדמי חכירה, דמי היתר ודמי הסכמה.</p>
         <span class="svc-more">קרא עוד ←</span>
-      </div>
+      </a>
       <div class="svc" onclick="openModal('m5')">
         <span class="svc-num">05</span>
         <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
@@ -308,13 +331,13 @@
         <p>הגשת תביעות לפיצוי בגין שינוי מצב הקרקע בעקבות תכניות בניין עיר והפקעות.</p>
         <span class="svc-more">קרא עוד ←</span>
       </div>
-      <div class="svc" onclick="openModal('m6')">
+      <a class="svc" href="shamaut-haklait.html" style="text-decoration:none;color:inherit">
         <span class="svc-num">06</span>
         <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-8 9 8"/><rect x="5" y="12" width="14" height="9"/><rect x="9" y="16" width="6" height="5"/></svg></div>
         <h3>נחלות ומשקים חקלאיים</h3>
         <p>הערכות שווי נחלות, ייעוץ בנושאי דמי הסכמה, חכירה מהוונת והיטלי השבחה במגזר החקלאי.</p>
         <span class="svc-more">קרא עוד ←</span>
-      </div>
+      </a>
       <div class="svc" onclick="openModal('m7')">
         <span class="svc-num">07</span>
         <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
@@ -322,13 +345,13 @@
         <p>עריכת טבלאות איחוד וחלוקה במסגרת תכנון תב"ע ותביעות ירידת ערך לפי סעיף 197.</p>
         <span class="svc-more">קרא עוד ←</span>
       </div>
-      <div class="svc" onclick="openModal('m8')">
+      <a class="svc" href="takan-21-pinui-binui.html" style="text-decoration:none;color:inherit">
         <span class="svc-num">08</span>
         <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
         <h3>כדאיות כלכלית וליווי פרויקטים</h3>
         <p>בדיקת היתכנות כלכלית, ניתוח סיכונים, ליווי פינוי-בינוי ותמ"א 38, הפקת דוחות אפס.</p>
         <span class="svc-more">קרא עוד ←</span>
-      </div>
+      </a>
       <div class="svc" onclick="openModal('m9')">
         <span class="svc-num">09</span>
         <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="9" height="10" rx="2"/><rect x="13" y="7" width="9" height="10" rx="2"/><line x1="11" y1="9" x2="13" y2="9"/><line x1="11" y1="12" x2="13" y2="12"/><line x1="11" y1="15" x2="13" y2="15"/></svg></div>
@@ -338,9 +361,16 @@
       </div>
     </div>
 
-    <div class="services-foot">
-      <div class="frame reveal"><img src="image_13.jpg" alt="שירותי שמאות מקרקעין" data-parallax></div>
-      <p class="reveal reveal-d1">"כל נכס הוא עולם ומלואו הדורש התאמה מדויקת למאפייני השוק המשתנים. אנו מלווים את הלקוח מהשאלה הראשונה ועד למסמך הסופי — בשקיפות מלאה."</p>
+    <figure class="services-foot reveal">
+      <div class="quote-photo">
+        <img src="image_1.jpg" alt="קו רקיע ופיתוח נדל״ן — הערכת שווי מקרקעין" loading="lazy">
+      </div>
+      <blockquote>
+        <span class="quote-eyebrow">הגישה שלנו</span>
+        <p>כל נכס הוא עולם ומלואו הדורש התאמה מדויקת למאפייני השוק המשתנים. אנו מלווים את הלקוח מהשאלה הראשונה ועד למסמך הסופי — בשקיפות מלאה.</p>
+        <cite>בורוביץ מזרחי · משרד שמאות מקרקעין</cite>
+      </blockquote>
+    </figure>
     </div>
   </div>
 </section>
@@ -549,6 +579,7 @@
           <li><a href="#about">אודות</a></li>
           <li><a href="#services">תחומי התמחות</a></li>
           <li><a href="#success">תוצאות מהשטח</a></li>
+          <li><a href="careers.html">קריירה</a></li>
           <li><a href="#contact">צור קשר</a></li>
         </ul>
       </div>
@@ -963,6 +994,8 @@ document.getElementById('legalPopup').addEventListener('click', function(e){ if(
     .then(function(res){ return res.json(); })
     .then(function(data){
       if(data.success){
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: 'generate_lead', form_source: formType, lead_subject: subject || 'unspecified' });
         statusEl.style.display='block'; statusEl.style.color='#059669';
         statusEl.textContent = data.message || 'הפנייה נשלחה בהצלחה!';
         form.reset();
@@ -978,6 +1011,22 @@ document.getElementById('legalPopup').addEventListener('click', function(e){ if(
     });
     return false;
   }
+</script>
+
+<!-- Contact micro-conversion tracking (WhatsApp / phone clicks) -->
+<script>
+  (function(){
+    window.dataLayer = window.dataLayer || [];
+    document.addEventListener('click', function(e){
+      var el = e.target.closest && e.target.closest('a');
+      if(!el) return;
+      if(el.closest('.wa-pill, .float-btn-wa') || /wa\.me|api\.whatsapp/.test(el.href||'')){
+        window.dataLayer.push({ event: 'contact_whatsapp' });
+      } else if((el.getAttribute('href')||'').indexOf('tel:') === 0){
+        window.dataLayer.push({ event: 'contact_phone' });
+      }
+    }, true);
+  })();
 </script>
 
 <!-- LinkedIn posts loader -->
