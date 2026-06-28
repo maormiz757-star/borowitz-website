@@ -156,6 +156,11 @@
 .job-card h3 { font-family: var(--serif); font-size: 1.4rem; font-weight: 700; color: var(--ink); margin-bottom: .5rem; }
 .job-card p { color: var(--muted); font-size: .95rem; max-width: 60ch; }
 .job-card .job-cta { white-space: nowrap; }
+/* Filled / closed positions — shown for context only, not applicable */
+.job-card.job-filled { opacity: .62; filter: grayscale(.45); }
+.job-card.job-filled:hover { transform: none; box-shadow: none; border-color: var(--line); }
+.job-card .tag-filled { color: var(--muted); border-color: var(--line); background: #f3f4f6; }
+.job-card .job-status { white-space: nowrap; font-size: .78rem; letter-spacing: .12em; color: var(--muted); border: 1px solid var(--line); padding: .4rem 1rem; border-radius: 2px; background: #f3f4f6; align-self: center; }
 
 .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px,1fr)); gap: clamp(1rem,2vw,1.6rem); margin-top: 1rem; }
 .value-card { padding: clamp(1.4rem,2.5vw,1.9rem); border: 1px solid var(--line); background: #fff; }

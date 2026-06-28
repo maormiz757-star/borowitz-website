@@ -94,14 +94,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <div class="sp-bg" style="background-image:url('slide1.jpg')"></div>
   <div class="sp-overlay"></div>
   <div class="sp-content">
-    <nav class="breadcrumb" aria-label="פירורי לחם">
-      <a href="index.html">ראשי</a><span class="sep">/</span>
-      <a href="index.html#services">תחומי התמחות</a><span class="sep">/</span>
-      <span>היטל השבחה</span>
-    </nav>
     <span class="eyebrow">תחום התמחות · היטל השבחה</span>
     <h1 class="sp-title">קיבלתם דרישת <span class="gold">היטל השבחה?</span><br>ייתכן שאתם משלמים יותר מדי</h1>
-    <p class="sp-sub">היטל ההשבחה עומד על 50% מ"ההשבחה" — והוא מבוסס על שומה שמכינה הוועדה. שומות אפשר לבדוק. אנחנו בוחנים את החישוב לעומק, מאתרים פטורים, קיזוזים וטעויות, ומגישים השגה מקצועית מול הוועדה. הפחתנו ללקוחותינו עד 100% מהדרישה.</p>
+    <p class="sp-sub">שיעור היטל ההשבחה לרוב הוא 50% מ"ההשבחה" (לעיתים גם שונה) — והוא מבוסס על שומה שמכינה הוועדה. שומות אפשר לבדוק. אנחנו בוחנים את החישוב לעומק, מאתרים פטורים, קיזוזים וטעויות, ומגישים השגה מקצועית מול הוועדה. הפחתנו ללקוחותינו עד 100% מהדרישה.</p>
     <div class="hero-actions">
       <a href="#lead" class="btn btn-gold">בדיקה ראשונית ללא התחייבות <span class="arr">←</span></a>
       <a href="#how" class="btn btn-ghost">איך זה עובד</a>
@@ -129,7 +124,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <h2 class="section-title" style="margin-top:.8rem;">היטל השבחה — בקצרה</h2>
       </div>
       <div class="prose reveal reveal-d1">
-        <p><strong>היטל השבחה</strong> הוא תשלום חובה לוועדה המקומית לתכנון ובנייה, החל מאז שנת 1975, כאשר ערך הנכס שלכם עלה בעקבות פעולה תכנונית — אישור תכנית בניין עיר, מתן <strong>הקלה</strong>, או התרת <strong>שימוש חורג</strong>.</p>
+        <p><strong>היטל השבחה</strong> הוא תשלום חובה לוועדה המקומית לתכנון ובנייה, החל מאז שנת 1975, כאשר ערך הנכס שלכם עלה בעקבות פעולה תכנונית — <strong>אישור תכנית משביחה</strong>, מתן <strong>הקלה</strong>, או התרת <strong>שימוש חורג</strong>.</p>
         <p>שיעור ההיטל הוא <strong>50% מגובה ההשבחה</strong> — כלומר מההפרש בין שווי הנכס במצב הקודם לבין שוויו במצב החדש שנוצר בעקבות הפעולה התכנונית. הכסף משמש את הוועדה לתכנון, פיתוח, רכישת קרקע לצורכי ציבור ושימור אתרים.</p>
         <p>ההיטל משולם בעת <strong>מימוש הזכויות</strong> — במכירת הנכס או בקבלת היתר בנייה — ולא רגע אחד לפני. כל ההסדר מעוגן ב<strong>תוספת השלישית לחוק התכנון והבנייה</strong>.</p>
         <div class="callout">גובה ההשבחה נקבע ב<strong>שומה</strong> שמכינה הוועדה — ולא פעם השומה הזו מופרזת, מתעלמת מפטור שמגיע לכם, או מבוססת על הנחות שגויות. כאן בדיוק נכנס שמאי מטעמכם.</div>
@@ -448,6 +443,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
   // Form submission → Supabase Edge Function
   var EDGE_FUNCTION_URL = 'https://nurgknexilxaxxovdbco.supabase.co/functions/v1/website-lead-intake';
+  var SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im51cmdrbmV4aWx4YXh4b3ZkYmNvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxMjAxMzYsImV4cCI6MjA4OTY5NjEzNn0.S6BwlUfYkdWegz1gigK5dK0lXUowp4safWOFEzExuS0';
   function submitContactForm(e){
     e.preventDefault();
     var form=document.getElementById('contact-form'), btn=document.getElementById('contact-submit-btn'), statusEl=document.getElementById('contact-form-status');
@@ -455,7 +451,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     var email=document.getElementById('contact-email').value.trim(), subject=document.getElementById('contact-subject').value, message=document.getElementById('contact-message').value.trim();
     if(!name || !phone){ statusEl.style.display='block'; statusEl.style.color='#fca5a5'; statusEl.textContent='נא למלא שם וטלפון'; return false; }
     btn.disabled=true; btn.textContent='שולח...'; statusEl.style.display='none';
-    fetch(EDGE_FUNCTION_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ name:name, phone:phone, email:email||null, subject:subject||null, message:message||null, source:'service-page' }) })
+    fetch(EDGE_FUNCTION_URL, { method:'POST', headers:{'Content-Type':'application/json','apikey':SB_ANON,'Authorization':'Bearer '+SB_ANON}, body: JSON.stringify({ name:name, phone:phone, email:email||null, subject:subject||null, message:message||null, source:'service-page' }) })
       .then(function(res){ return res.json(); })
       .then(function(data){
         if(data.success){

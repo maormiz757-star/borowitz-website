@@ -85,11 +85,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <div class="sp-bg" style="background-image:url('slide10.jpg')"></div>
   <div class="sp-overlay"></div>
   <div class="sp-content">
-    <nav class="breadcrumb" aria-label="פירורי לחם">
-      <a href="index.html">ראשי</a><span class="sep">/</span>
-      <a href="index.html#services">תחומי התמחות</a><span class="sep">/</span>
-      <span>שמאות חקלאית</span>
-    </nav>
     <span class="eyebrow">תחום התמחות · נזקים ופיצויים בחקלאות</span>
     <h1 class="sp-title">נזק לגידולים <span class="gold">או לקרקע?</span><br>נעריך אותו — ונדאג לפיצוי מלא</h1>
     <p class="sp-sub">ברד, קרה ושיטפון — או פלישה לקרקע ותפיסת שטח — יכולים למחוק עונה שלמה ברגע. אנחנו שמאים חקלאיים שמעריכים את הנזק בשטח, באופן עצמאי ומקצועי, ומלווים אתכם עד שתקבלו את הפיצוי שבאמת מגיע לכם.</p>
@@ -406,6 +401,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     });
   })();
   var EDGE_FUNCTION_URL = 'https://nurgknexilxaxxovdbco.supabase.co/functions/v1/website-lead-intake';
+  var SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im51cmdrbmV4aWx4YXh4b3ZkYmNvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxMjAxMzYsImV4cCI6MjA4OTY5NjEzNn0.S6BwlUfYkdWegz1gigK5dK0lXUowp4safWOFEzExuS0';
   function submitContactForm(e){
     e.preventDefault();
     var form=document.getElementById('contact-form'), btn=document.getElementById('contact-submit-btn'), statusEl=document.getElementById('contact-form-status');
@@ -413,7 +409,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     var email=document.getElementById('contact-email').value.trim(), subject=document.getElementById('contact-subject').value, message=document.getElementById('contact-message').value.trim();
     if(!name || !phone){ statusEl.style.display='block'; statusEl.style.color='#fca5a5'; statusEl.textContent='נא למלא שם וטלפון'; return false; }
     btn.disabled=true; btn.textContent='שולח...'; statusEl.style.display='none';
-    fetch(EDGE_FUNCTION_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ name:name, phone:phone, email:email||null, subject:subject||null, message:message||null, source:'service-page' }) })
+    fetch(EDGE_FUNCTION_URL, { method:'POST', headers:{'Content-Type':'application/json','apikey':SB_ANON,'Authorization':'Bearer '+SB_ANON}, body: JSON.stringify({ name:name, phone:phone, email:email||null, subject:subject||null, message:message||null, source:'service-page' }) })
       .then(function(res){ return res.json(); })
       .then(function(data){
         if(data.success){

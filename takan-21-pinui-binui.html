@@ -86,14 +86,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <div class="sp-bg" style="background-image:url('slide5.jpg')"></div>
   <div class="sp-overlay"></div>
   <div class="sp-content">
-    <nav class="breadcrumb" aria-label="פירורי לחם">
-      <a href="index.html">ראשי</a><span class="sep">/</span>
-      <a href="index.html#services">תחומי התמחות</a><span class="sep">/</span>
-      <span>תקן 21 ופינוי-בינוי</span>
-    </nav>
     <span class="eyebrow">תחום התמחות · התחדשות עירונית</span>
-    <h1 class="sp-title">תקן 21 ו<span class="gold">פינוי-בינוי</span><br>המספרים שמכריעים אם העסקה הוגנת</h1>
-    <p class="sp-sub">פרויקט התחדשות עירונית עומד או נופל על שתי שאלות: האם הוא כדאי כלכלית, והאם התמורה לדיירים הוגנת. שומת תקן 21 עונה על שתיהן — ואנחנו עורכים אותה ומלווים דיירים, יזמים ובתי משפט מבדיקת ההיתכנות ועד המימוש.</p>
+    <h1 class="sp-title">תקן 21 <span class="gold">ופינוי-בינוי</span><br>המספרים שמכריעים אם העסקה הוגנת</h1>
+    <p class="sp-sub">פרויקט התחדשות עירונית עומד או נופל על שתי שאלות: האם הוא כדאי כלכלית, והאם התמורה לדיירים הוגנת. שומת תקן 21 עונה על שתיהן — ואנחנו עורכים אותה ומלווים דיירים ויזמים מבדיקת ההיתכנות ועד המימוש.</p>
     <div class="hero-actions">
       <a href="#lead" class="btn btn-gold">לתיאום ייעוץ <span class="arr">←</span></a>
       <a href="#how" class="btn btn-ghost">איך זה עובד</a>
@@ -106,7 +101,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <div class="stat-strip-inner">
       <div class="stat reveal"><div class="num">21</div><div class="label">תקן שמאי מחייב להתחדשות עירונית</div></div>
       <div class="stat reveal reveal-d1"><div class="num">2</div><div class="label">בדיקות: כדאיות הפרויקט והוגנות התמורה</div></div>
-      <div class="stat reveal reveal-d2"><div class="num">360°</div><div class="label">ליווי דיירים, יזמים ובתי משפט</div></div>
+      <div class="stat reveal reveal-d2"><div class="num">360°</div><div class="label">ליווי מלא לדיירים וליזמים</div></div>
     </div>
   </div>
 </section>
@@ -412,6 +407,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     });
   })();
   var EDGE_FUNCTION_URL = 'https://nurgknexilxaxxovdbco.supabase.co/functions/v1/website-lead-intake';
+  var SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im51cmdrbmV4aWx4YXh4b3ZkYmNvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxMjAxMzYsImV4cCI6MjA4OTY5NjEzNn0.S6BwlUfYkdWegz1gigK5dK0lXUowp4safWOFEzExuS0';
   function submitContactForm(e){
     e.preventDefault();
     var form=document.getElementById('contact-form'), btn=document.getElementById('contact-submit-btn'), statusEl=document.getElementById('contact-form-status');
@@ -419,7 +415,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     var email=document.getElementById('contact-email').value.trim(), subject=document.getElementById('contact-subject').value, message=document.getElementById('contact-message').value.trim();
     if(!name || !phone){ statusEl.style.display='block'; statusEl.style.color='#fca5a5'; statusEl.textContent='נא למלא שם וטלפון'; return false; }
     btn.disabled=true; btn.textContent='שולח...'; statusEl.style.display='none';
-    fetch(EDGE_FUNCTION_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ name:name, phone:phone, email:email||null, subject:subject||null, message:message||null, source:'service-page' }) })
+    fetch(EDGE_FUNCTION_URL, { method:'POST', headers:{'Content-Type':'application/json','apikey':SB_ANON,'Authorization':'Bearer '+SB_ANON}, body: JSON.stringify({ name:name, phone:phone, email:email||null, subject:subject||null, message:message||null, source:'service-page' }) })
       .then(function(res){ return res.json(); })
       .then(function(data){
         if(data.success){
