@@ -236,6 +236,10 @@ select.inp{appearance:none;-webkit-appearance:none;cursor:pointer;padding-left:3
   </main>
 </div>
 
+<!-- PDF generation (client-side receipt of the submitted form) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 <script>
 (function(){
   "use strict";
@@ -295,6 +299,60 @@ select.inp{appearance:none;-webkit-appearance:none;cursor:pointer;padding-left:3
     .catch(function(){showError('אירעה תקלה בטעינת הטופס. נסו לרענן את הדף.');});
 
   function val(id){var e=$(id);return e?e.value.trim():'';}
+
+  // ── PDF receipt of the submitted form ──────────────────────────────────────
+  function escHtml(s){return String(s==null?'':s).replace(/[&<>]/g,function(c){return({'&':'&amp;','<':'&lt;','>':'&gt;'})[c];});}
+
+  // Build an offscreen, print-styled node mirroring the form, from the values
+  // the client entered. html2canvas rasterises it → Hebrew/RTL come out exactly
+  // as rendered (no font-embedding headaches).
+  function buildReceiptNode(sections, meta){
+    function rowsHtml(rows){
+      return rows.filter(function(r){return r.v;}).map(function(r){
+        return '<tr><td style="padding:7px 14px;color:#64748b;font-size:13px;white-space:nowrap;vertical-align:top;width:150px">'+escHtml(r.k)+'</td>'+
+               '<td style="padding:7px 14px;color:#0f2038;font-size:14px;font-weight:600;white-space:pre-wrap">'+escHtml(r.v)+'</td></tr>';
+      }).join('');
+    }
+    var secHtml=sections.filter(function(s){return s.rows.filter(function(r){return r.v;}).length;}).map(function(s){
+      return '<div style="margin-bottom:16px"><div style="font-size:13px;font-weight:800;color:#1c3461;border-bottom:2px solid #eef2f7;padding-bottom:5px;margin-bottom:4px">'+escHtml(s.title)+'</div>'+
+             '<table style="width:100%;border-collapse:collapse">'+rowsHtml(s.rows)+'</table></div>';
+    }).join('');
+    var wrap=document.createElement('div');
+    wrap.style.cssText='position:fixed;left:-99999px;top:0;width:720px;background:#fff;direction:rtl;font-family:Heebo,Assistant,Arial,sans-serif;color:#0f2038';
+    wrap.innerHTML=
+      '<div style="background:#12233f;padding:22px 28px;display:flex;align-items:center;justify-content:space-between">'+
+        '<div><div style="color:#fff;font-size:19px;font-weight:800">בורוביץ מזרחי · שמאות מקרקעין</div>'+
+        '<div style="color:#c9d6ea;font-size:13px;margin-top:2px">פרטים להכנת השומה — עותק לתיעוד</div></div>'+
+        (meta.logo?'<img src="'+escHtml(meta.logo)+'" crossorigin="anonymous" style="height:42px;filter:brightness(0) invert(1)">':'')+
+      '</div>'+
+      '<div style="padding:24px 28px">'+secHtml+
+      '<div style="margin-top:18px;border-top:1px solid #eef2f7;padding-top:10px;color:#94a3b8;font-size:12px">נשלח דרך טופס איסוף הפרטים · '+escHtml(meta.date)+'</div></div>';
+    return wrap;
+  }
+
+  // Returns {doc, base64} or null (never throws — PDF is best-effort).
+  function generatePdf(sections, meta){
+    return new Promise(function(resolve){
+      try{
+        if(!window.html2canvas||!window.jspdf){resolve(null);return;}
+        var node=buildReceiptNode(sections,meta);
+        document.body.appendChild(node);
+        window.html2canvas(node,{scale:2,backgroundColor:'#ffffff',useCORS:true}).then(function(canvas){
+          try{document.body.removeChild(node);}catch(_){}
+          var JsPDF=window.jspdf.jsPDF;
+          var pdf=new JsPDF('p','mm','a4');
+          var pw=pdf.internal.pageSize.getWidth(), ph=pdf.internal.pageSize.getHeight();
+          var imgW=pw, imgH=canvas.height*pw/canvas.width;
+          var img=canvas.toDataURL('image/jpeg',0.92);
+          if(imgH<=ph){pdf.addImage(img,'JPEG',0,0,imgW,imgH);}
+          else{var pos=0,remaining=imgH;while(remaining>0){pdf.addImage(img,'JPEG',0,pos,imgW,imgH);remaining-=ph;if(remaining>0){pdf.addPage();pos-=ph;}}}
+          var base64=pdf.output('datauristring').split(',')[1];
+          resolve({doc:pdf,base64:base64});
+        }).catch(function(){try{document.body.removeChild(node);}catch(_){}resolve(null);});
+      }catch(_){resolve(null);}
+    });
+  }
+
   $('intake-form').addEventListener('submit',function(e){
     e.preventDefault();
     if($('hp-field').value){return;}
@@ -326,15 +384,32 @@ select.inp{appearance:none;-webkit-appearance:none;cursor:pointer;padding-left:3
       note:val('note'),contacts:contacts,
       _hp:$('hp-field').value,elapsed_ms:(Date.now()-formShownAt),consent:true};
 
+    // Compose the PDF receipt from the entered values (same layout as the form).
+    var contactsText=contacts.map(function(c){
+      return c.role+': '+[c.name,c.phone,c.email].filter(Boolean).join(' · ');
+    }).join('\n');
+    var pdfSections=[
+      {title:'מבקש השומה',rows:[{k:'שם מלא',v:name},{k:'ת.ז. / ח.פ',v:val('c-id')},{k:'טלפון',v:phone},{k:'דוא״ל',v:val('c-email')}]},
+      {title:'אנשי קשר נוספים',rows:[{k:'',v:contactsText}]},
+      {title:'פרטי הנכס',rows:[{k:'עיר / יישוב',v:val('p-city')},{k:'רחוב ומספר',v:val('p-street')},{k:'גוש',v:val('p-block')},{k:'חלקה',v:val('p-parcel')},{k:'תת חלקה',v:val('p-sub')}]},
+      {title:'פרטים נוספים',rows:[{k:'מטרת השומה',v:val('purpose')},{k:'איך הגעת אלינו',v:val('source')},{k:'איש קשר לתיאום ביקור',v:val('v-cname')},{k:'טלפון לתיאום ביקור',v:val('v-cphone')},{k:'הערה',v:val('note')}]}
+    ];
+    var pdfMeta={logo:($('brand-logo')?$('brand-logo').src:''),date:new Date().toLocaleDateString('he-IL',{day:'numeric',month:'long',year:'numeric'})};
+    var pdfName='פרטי שומה - '+name.replace(/[\\/:*?"<>|]/g,'').slice(0,40)+'.pdf';
+
     var btn=$('submit-btn');btn.disabled=true;btn.textContent='שולח…';
-    fetch(EDGE,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
-      .then(function(r){return r.json().then(function(d){return {ok:r.ok,d:d};});})
-      .then(function(res){
-        if(!res.ok||!res.d.ok){throw new Error(res.d&&res.d.error||'שגיאה בשליחה');}
-        try{window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'intake_submitted'});}catch(_){}
-        $('intake-form').classList.add('hidden');$('success-state').classList.remove('hidden');
-        window.scrollTo({top:0,behavior:'smooth'});
-      })
+    generatePdf(pdfSections,pdfMeta).then(function(pdf){
+      if(pdf){payload.pdf_base64=pdf.base64;payload.pdf_filename=pdfName;}
+      return fetch(EDGE,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
+        .then(function(r){return r.json().then(function(d){return {ok:r.ok,d:d};});})
+        .then(function(res){
+          if(!res.ok||!res.d.ok){throw new Error(res.d&&res.d.error||'שגיאה בשליחה');}
+          try{window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'intake_submitted'});}catch(_){}
+          if(pdf){try{pdf.doc.save(pdfName);}catch(_){}}
+          $('intake-form').classList.add('hidden');$('success-state').classList.remove('hidden');
+          window.scrollTo({top:0,behavior:'smooth'});
+        });
+    })
       .catch(function(err){
         errEl.style.display='block';errEl.textContent=(err&&err.message)?err.message:'אירעה שגיאה. נסו שוב.';
         btn.disabled=false;btn.textContent='שליחת הפרטים';
