@@ -6,6 +6,18 @@
 <meta name="robots" content="noindex, nofollow">
 <title>טופס איסוף פרטים | בורוביץ מזרחי שמאות מקרקעין</title>
 
+<!-- Link preview (WhatsApp / social) — restores the share card -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="בורוביץ מזרחי שמאות מקרקעין וחקלאות בע&quot;מ">
+<meta property="og:title" content="טופס פרטים לשומה">
+<meta property="og:description" content="בורוביץ מזרחי שמאות מקרקעין וחקלאות בע&quot;מ — מילוי פרטים להכנת השומה">
+<meta property="og:image" content="https://www.bor-miz.co.il/logo13.png">
+<meta property="og:url" content="https://www.bor-miz.co.il/intake.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="טופס פרטים לשומה">
+<meta name="twitter:description" content="בורוביץ מזרחי שמאות מקרקעין וחקלאות בע&quot;מ">
+<meta name="twitter:image" content="https://www.bor-miz.co.il/logo13.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -239,7 +251,6 @@ select.inp{appearance:none;-webkit-appearance:none;cursor:pointer;padding-left:3
 <!-- PDF generation (client-side receipt of the submitted form) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="pdf-brand.js"></script>
 
 <script>
 (function(){
@@ -318,21 +329,16 @@ select.inp{appearance:none;-webkit-appearance:none;cursor:pointer;padding-left:3
       return '<div style="margin-bottom:16px"><div style="font-size:13px;font-weight:800;color:#1c3461;border-bottom:2px solid #eef2f7;padding-bottom:5px;margin-bottom:4px">'+escHtml(s.title)+'</div>'+
              '<table style="width:100%;border-collapse:collapse">'+rowsHtml(s.rows)+'</table></div>';
     }).join('');
-    // Letterhead banners from the appraisal (.docx header2/footer2) — same
-    // format as the שומה. Provided by pdf-brand.js as data URIs.
-    var hImg=window.BM_HEADER_IMG||'', fImg=window.BM_FOOTER_IMG||'';
     var wrap=document.createElement('div');
     wrap.style.cssText='position:fixed;left:-99999px;top:0;width:720px;background:#fff;direction:rtl;font-family:Heebo,Assistant,Arial,sans-serif;color:#0f2038';
     wrap.innerHTML=
-      '<div style="padding:26px 40px 4px">'+
-        (hImg?'<img src="'+hImg+'" style="width:100%;display:block">':'')+
-        '<div style="text-align:center;color:#1c3461;font-size:15px;font-weight:800;margin-top:16px">טופס איסוף פרטים להכנת שומה</div>'+
-        '<div style="text-align:center;color:#94a3b8;font-size:12px;margin-top:2px">עותק לתיעוד · '+escHtml(meta.date)+'</div>'+
+      '<div style="background:#12233f;padding:22px 28px;display:flex;align-items:center;justify-content:space-between">'+
+        '<div><div style="color:#fff;font-size:19px;font-weight:800">בורוביץ מזרחי · שמאות מקרקעין</div>'+
+        '<div style="color:#c9d6ea;font-size:13px;margin-top:2px">פרטים להכנת השומה — עותק לתיעוד</div></div>'+
+        (meta.logo?'<img src="'+escHtml(meta.logo)+'" crossorigin="anonymous" style="height:42px;filter:brightness(0) invert(1)">':'')+
       '</div>'+
-      '<div style="padding:14px 40px 18px">'+secHtml+'</div>'+
-      '<div style="padding:4px 40px 26px">'+
-        (fImg?'<img src="'+fImg+'" style="width:100%;display:block">':'')+
-      '</div>';
+      '<div style="padding:24px 28px">'+secHtml+
+      '<div style="margin-top:18px;border-top:1px solid #eef2f7;padding-top:10px;color:#94a3b8;font-size:12px">נשלח דרך טופס איסוף הפרטים · '+escHtml(meta.date)+'</div></div>';
     return wrap;
   }
 
