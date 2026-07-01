@@ -239,6 +239,7 @@ select.inp{appearance:none;-webkit-appearance:none;cursor:pointer;padding-left:3
 <!-- PDF generation (client-side receipt of the submitted form) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="pdf-brand.js"></script>
 
 <script>
 (function(){
@@ -317,16 +318,21 @@ select.inp{appearance:none;-webkit-appearance:none;cursor:pointer;padding-left:3
       return '<div style="margin-bottom:16px"><div style="font-size:13px;font-weight:800;color:#1c3461;border-bottom:2px solid #eef2f7;padding-bottom:5px;margin-bottom:4px">'+escHtml(s.title)+'</div>'+
              '<table style="width:100%;border-collapse:collapse">'+rowsHtml(s.rows)+'</table></div>';
     }).join('');
+    // Letterhead banners from the appraisal (.docx header2/footer2) — same
+    // format as the שומה. Provided by pdf-brand.js as data URIs.
+    var hImg=window.BM_HEADER_IMG||'', fImg=window.BM_FOOTER_IMG||'';
     var wrap=document.createElement('div');
     wrap.style.cssText='position:fixed;left:-99999px;top:0;width:720px;background:#fff;direction:rtl;font-family:Heebo,Assistant,Arial,sans-serif;color:#0f2038';
     wrap.innerHTML=
-      '<div style="background:#12233f;padding:22px 28px;display:flex;align-items:center;justify-content:space-between">'+
-        '<div><div style="color:#fff;font-size:19px;font-weight:800">בורוביץ מזרחי · שמאות מקרקעין</div>'+
-        '<div style="color:#c9d6ea;font-size:13px;margin-top:2px">פרטים להכנת השומה — עותק לתיעוד</div></div>'+
-        (meta.logo?'<img src="'+escHtml(meta.logo)+'" crossorigin="anonymous" style="height:42px;filter:brightness(0) invert(1)">':'')+
+      '<div style="padding:26px 40px 4px">'+
+        (hImg?'<img src="'+hImg+'" style="width:100%;display:block">':'')+
+        '<div style="text-align:center;color:#1c3461;font-size:15px;font-weight:800;margin-top:16px">טופס איסוף פרטים להכנת שומה</div>'+
+        '<div style="text-align:center;color:#94a3b8;font-size:12px;margin-top:2px">עותק לתיעוד · '+escHtml(meta.date)+'</div>'+
       '</div>'+
-      '<div style="padding:24px 28px">'+secHtml+
-      '<div style="margin-top:18px;border-top:1px solid #eef2f7;padding-top:10px;color:#94a3b8;font-size:12px">נשלח דרך טופס איסוף הפרטים · '+escHtml(meta.date)+'</div></div>';
+      '<div style="padding:14px 40px 18px">'+secHtml+'</div>'+
+      '<div style="padding:4px 40px 26px">'+
+        (fImg?'<img src="'+fImg+'" style="width:100%;display:block">':'')+
+      '</div>';
     return wrap;
   }
 
@@ -385,12 +391,14 @@ select.inp{appearance:none;-webkit-appearance:none;cursor:pointer;padding-left:3
       _hp:$('hp-field').value,elapsed_ms:(Date.now()-formShownAt),consent:true};
 
     // Compose the PDF receipt from the entered values (same layout as the form).
-    var contactsText=contacts.map(function(c){
-      return c.role+': '+[c.name,c.phone,c.email].filter(Boolean).join(' · ');
-    }).join('\n');
+    // One row per additional contact: role in the (nowrap) label column, so
+    // labels like עו"ד stay whole and aligned instead of wrapping mid-string.
+    var contactRows=contacts.map(function(c){
+      return {k:(c.role||'איש קשר'),v:[c.name,c.phone,c.email].filter(Boolean).join(' · ')};
+    }).filter(function(r){return r.v;});
     var pdfSections=[
       {title:'מבקש השומה',rows:[{k:'שם מלא',v:name},{k:'ת.ז. / ח.פ',v:val('c-id')},{k:'טלפון',v:phone},{k:'דוא״ל',v:val('c-email')}]},
-      {title:'אנשי קשר נוספים',rows:[{k:'',v:contactsText}]},
+      {title:'אנשי קשר נוספים',rows:contactRows},
       {title:'פרטי הנכס',rows:[{k:'עיר / יישוב',v:val('p-city')},{k:'רחוב ומספר',v:val('p-street')},{k:'גוש',v:val('p-block')},{k:'חלקה',v:val('p-parcel')},{k:'תת חלקה',v:val('p-sub')}]},
       {title:'פרטים נוספים',rows:[{k:'מטרת השומה',v:val('purpose')},{k:'איך הגעת אלינו',v:val('source')},{k:'איש קשר לתיאום ביקור',v:val('v-cname')},{k:'טלפון לתיאום ביקור',v:val('v-cphone')},{k:'הערה',v:val('note')}]}
     ];
