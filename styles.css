@@ -454,6 +454,8 @@ button { font-family: inherit; cursor: pointer; }
   transition: transform .5s var(--ease), box-shadow .5s var(--ease);
 }
 .linkedin-card:hover { transform: translateY(-6px); box-shadow: 0 30px 60px -40px rgba(19,31,51,.5); }
+.linkedin-card--featured { border-color: var(--gold); box-shadow: 0 20px 45px -30px rgba(191,155,74,.6); position: relative; }
+.linkedin-card-badge { position: absolute; top: .8rem; inset-inline-start: .8rem; z-index: 2; background: var(--gold); color: #fff; font-size: .72rem; font-weight: 700; padding: .25rem .6rem; border-radius: 999px; box-shadow: 0 4px 12px -4px rgba(191,155,74,.7); }
 .linkedin-card-img { aspect-ratio: 16/9; overflow: hidden; }
 .linkedin-card-img img { width: 100%; height: 100%; object-fit: cover; }
 .linkedin-card-body { padding: 1.5rem; display: flex; flex-direction: column; gap: .8rem; flex: 1; }
@@ -674,7 +676,7 @@ footer { background: var(--navy-2); color: #fff; padding-block: clamp(3rem,6vw,5
 }
 @media (max-width: 880px) {
   .nav-links {
-    position: fixed; inset: 0; inset-inline-start: auto; width: min(82vw, 360px);
+    position: fixed; top: 0; bottom: 0; right: 0; left: auto; width: min(82vw, 360px);
     background: var(--navy-2); flex-direction: column; align-items: flex-start; justify-content: center;
     padding: 4rem 2.5rem; gap: 1.6rem; transform: translateX(100%); transition: transform .5s var(--ease);
     box-shadow: -20px 0 60px -20px rgba(0,0,0,.5);
