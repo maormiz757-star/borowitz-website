@@ -258,6 +258,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <h2>בדיקת זכאות חינם</h2>
   <p>השאירו פרטים ושמאי מומחה יחזור אליכם תוך 24 שעות</p>
   <form class="contact-form" id="leadForm" onsubmit="submitForm(event)">
+    <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" />
     <input type="text" name="name" placeholder="שם מלא" required />
     <input type="tel" name="phone" placeholder="טלפון" required />
     <input type="email" name="email" placeholder="אימייל" class="full" />
@@ -280,7 +281,7 @@ async function submitForm(e) {
   e.preventDefault();
   const form = e.target, btn = form.querySelector('.submit-btn'), msg = document.getElementById('formMsg');
   btn.disabled = true; btn.textContent = 'שולח...';
-  const data = { name: form.name.value, phone: form.phone.value, email: form.email.value || null, city: form.city.value || null, address: form.address.value || null, subject: form.subject.value, source: form.source.value, form_type: 'landing' };
+  const data = { name: form.name.value, phone: form.phone.value, email: form.email.value || null, city: form.city.value || null, address: form.address.value || null, subject: form.subject.value, source: form.source.value, form_type: 'landing', _hp: form.website ? form.website.value : '', elapsed_ms: Math.round(performance.now()) };
   try {
     const res = await fetch('https://nurgknexilxaxxovdbco.supabase.co/functions/v1/website-lead-intake', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
     if (res.ok) { msg.style.display = 'block'; msg.style.color = '#4ade80'; msg.textContent = 'הפנייה נשלחה בהצלחה! ניצור קשר בהקדם.'; form.reset(); window.dataLayer = window.dataLayer || []; window.dataLayer.push({ event: 'generate_lead', form_source: 'landing', lead_subject: (form.subject && form.subject.value) || 'landing' }); }

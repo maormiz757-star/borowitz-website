@@ -589,6 +589,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <h3>שלחו לנו הודעה</h3>
         <p>נחזור אליכם בהקדם האפשרי</p>
         <form class="contact-form" id="contact-form" onsubmit="return submitContactForm(event, 'contact')">
+          <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
           <div class="form-grid">
             <div class="form-group">
               <label for="contact-name">שם מלא *</label>
@@ -709,6 +710,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="popup-body">
       <form class="popup-form" id="popup-form" onsubmit="return submitContactForm(event, 'popup')">
+        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
         <div class="form-group">
           <label for="popup-name">שם מלא *</label>
           <input type="text" id="popup-name" name="name" placeholder="ישראל ישראלי" required aria-required="true" autocomplete="name">
@@ -1181,7 +1183,7 @@ document.getElementById('legalPopup').addEventListener('click', function(e){ if(
     btn.disabled = true; btn.textContent = 'שולח...'; statusEl.style.display='none';
     fetch(EDGE_FUNCTION_URL, {
       method:'POST', headers:{ 'Content-Type':'application/json', 'apikey':SB_ANON, 'Authorization':'Bearer '+SB_ANON },
-      body: JSON.stringify({ name:name, phone:phone, email:email||null, subject:subject||null, message:message||null, source:formType })
+      body: JSON.stringify({ name:name, phone:phone, email:email||null, subject:subject||null, message:message||null, source:formType, _hp:(form.querySelector('input[name="website"]')||{value:''}).value, elapsed_ms:Math.round(performance.now()) })
     })
     .then(function(res){ return res.json(); })
     .then(function(data){
