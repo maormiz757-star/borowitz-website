@@ -1,18 +1,41 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- ===== GOOGLE TAG MANAGER =====
-     TODO: replace GTM-XXXXXXX with the real container ID before deploy.
-     GA4 + Meta Pixel + Google Ads tags are configured inside GTM (no code changes). -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
-<!-- ===== END GOOGLE TAG MANAGER ===== -->
+<!-- ===== GOOGLE ANALYTICS 4 (gtag.js) =====
+     Property "bor-miz.co.il", measurement ID G-GYNQPGPR33 - installed 2026-09-08,
+     replacing a Tag Manager placeholder that never had a container behind it.
+     The bridge below turns the site's existing dataLayer.push({event:'...'}) calls
+     (generate_lead / contact_whatsapp / contact_phone / intake_submitted) into GA4
+     events, so every call site elsewhere in the site stays untouched. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GYNQPGPR33"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'G-GYNQPGPR33');
+  (function(){
+    // gtag() itself pushes an arguments object, which has no .event key - so this
+    // never recurses on its own output.
+    var push = window.dataLayer.push;
+    window.dataLayer.push = function(){
+      for (var i = 0; i < arguments.length; i++) {
+        var o = arguments[i];
+        if (o && typeof o.event === 'string') {
+          var params = {};
+          for (var k in o) {
+            if (k !== 'event' && Object.prototype.hasOwnProperty.call(o, k)) params[k] = o[k];
+          }
+          gtag('event', o.event, params);
+        }
+      }
+      return push.apply(window.dataLayer, arguments);
+    };
+  })();
+</script>
+<!-- ===== END GOOGLE ANALYTICS 4 ===== -->
 
 <!-- ===== SEO BASIC ===== -->
 <title>בורוביץ מזרחי שמאות מקרקעין וחקלאות בע"מ</title>
@@ -64,7 +87,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     "addressCountry": "IL"
   },
   "geo": { "@type": "GeoCoordinates", "latitude": 32.9039, "longitude": 35.1806 },
-  "openingHours": "Mo-Th 08:00-17:00, Fr 08:00-13:00",
+  "openingHours": "Su-Th 08:00-18:00",
   "priceRange": "$$",
   "description": "משרד שמאות מקרקעין מוביל בצפון, המתמחה בהיטלי השבחה, הערכות שווי, נחלות ומשקים חקלאיים.",
   "founder": [
@@ -155,10 +178,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </head>
 <body>
 
-<!-- Google Tag Manager (noscript) - TODO: replace GTM-XXXXXXX -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
 
 <a href="#main-content" class="skip-to-content">דלג לתוכן הראשי</a>
 
@@ -171,6 +190,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <ul class="nav-links" id="navLinks">
       <li><a href="#about" onclick="closeMenu()">אודות</a></li>
       <li><a href="#services" onclick="closeMenu()">תחומי התמחות</a></li>
+      <li><a href="maamarim.html" onclick="closeMenu()">מאמרים</a></li>
       <li><a href="#linkedin-posts" onclick="closeMenu()">עדכונים</a></li>
       <li><a href="#success" onclick="closeMenu()">מהשטח</a></li>
       <li><a href="careers.html" onclick="closeMenu()">קריירה</a></li>
@@ -330,13 +350,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <div class="services-body">
     <div class="services-grid reveal">
-      <a class="svc" href="hetel-hashbacha.html" data-svc="m1" style="text-decoration:none;color:inherit">
+      <div class="svc svc-static" data-svc="m1">
         <span class="svc-num">01</span>
         <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 8 11 13 14 21 5"/><polyline points="16 5 21 5 21 10"/></svg></div>
         <h3>היטלי השבחה</h3>
         <p>בדיקה, חישוב והגשת השגות על שומות היטל השבחה. ייצוג מול ועדות מקומיות ומרחביות.</p>
-        <span class="svc-more">קרא עוד ←</span>
-      </a>
+      
+      </div>
       <div class="svc svc-soon" data-svc="m2" aria-disabled="true">
         <span class="svc-num">02</span>
         <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><circle cx="15" cy="15" r="3"/><line x1="17.5" y1="17.5" x2="21" y2="21"/></svg></div>
@@ -344,20 +364,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <p>הערכת כל סוגי הנכסים: דירות, בתי מגורים, מבנים מסחריים, משרדים, מגרשים וקרקעות חקלאיות.</p>
         <span class="svc-more">בקרוב</span>
       </div>
-      <a class="svc" href="shamaut-haklait.html" data-svc="m3" style="text-decoration:none;color:inherit">
+      <div class="svc svc-static" data-svc="m3">
         <span class="svc-num">03</span>
         <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12"/><path d="M5 12H2a10 10 0 0020 0h-3"/><path d="M8 6l4-4 4 4"/><path d="M8 12a4 4 0 008 0"/></svg></div>
         <h3>שומות חקלאיות</h3>
         <p>הערכות נזקים בגידולים ובחקלאות, סיוע בהגשת בקשה לפיצויים במסלול ירוק/אדום.</p>
-        <span class="svc-more">קרא עוד ←</span>
-      </a>
-      <a class="svc" href="hasagot-rami.html" data-svc="m4" style="text-decoration:none;color:inherit">
+      
+      </div>
+      <div class="svc svc-static" data-svc="m4">
         <span class="svc-num">04</span>
         <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></div>
         <h3>השגות על שומות רמ"י</h3>
         <p>הגשת השגות וייצוג מול רשות מקרקעי ישראל בנוגע לדמי חכירה, דמי היתר ודמי הסכמה.</p>
-        <span class="svc-more">קרא עוד ←</span>
-      </a>
+      
+      </div>
       <div class="svc svc-soon" data-svc="m5" aria-disabled="true">
         <span class="svc-num">05</span>
         <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
@@ -379,13 +399,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <p>עריכת טבלאות איחוד וחלוקה במסגרת תכנון תב"ע ותביעות ירידת ערך לפי סעיף 197.</p>
         <span class="svc-more">בקרוב</span>
       </div>
-      <a class="svc" href="takan-21-pinui-binui.html" data-svc="m8" style="text-decoration:none;color:inherit">
+      <div class="svc svc-static" data-svc="m8">
         <span class="svc-num">08</span>
         <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
         <h3>כדאיות כלכלית וליווי פרויקטים</h3>
         <p>בדיקת היתכנות כלכלית, ניתוח סיכונים, ליווי פינוי-בינוי ותמ"א 38, הפקת דוחות אפס.</p>
-        <span class="svc-more">קרא עוד ←</span>
-      </a>
+      
+      </div>
       <div class="svc svc-soon" data-svc="m9" aria-disabled="true">
         <span class="svc-num">09</span>
         <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="9" height="10" rx="2"/><rect x="13" y="7" width="9" height="10" rx="2"/><line x1="11" y1="9" x2="13" y2="9"/><line x1="11" y1="12" x2="13" y2="12"/><line x1="11" y1="15" x2="13" y2="15"/></svg></div>
@@ -589,7 +609,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <h3>שלחו לנו הודעה</h3>
         <p>נחזור אליכם בהקדם האפשרי</p>
         <form class="contact-form" id="contact-form" onsubmit="return submitContactForm(event, 'contact')">
-          <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+          <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);border:0;opacity:0">
           <div class="form-grid">
             <div class="form-group">
               <label for="contact-name">שם מלא *</label>
@@ -643,10 +663,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <ul>
           <li><a href="#about">אודות</a></li>
           <li><a href="#services">תחומי התמחות</a></li>
-          <li><a href="hetel-hashbacha.html">היטל השבחה</a></li>
-          <li><a href="hasagot-rami.html">השגות על שומות רמ"י</a></li>
-          <li><a href="shamaut-haklait.html">שמאות חקלאית</a></li>
-          <li><a href="takan-21-pinui-binui.html">תקן 21 ופינוי-בינוי</a></li>
+          <li><a href="maamarim.html">מאמרים</a></li>
           <li><a href="#success">תוצאות מהשטח</a></li>
           <li><a href="careers.html">קריירה</a></li>
           <li><a href="#contact">צור קשר</a></li>
@@ -710,7 +727,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="popup-body">
       <form class="popup-form" id="popup-form" onsubmit="return submitContactForm(event, 'popup')">
-        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);border:0;opacity:0">
         <div class="form-group">
           <label for="popup-name">שם מלא *</label>
           <input type="text" id="popup-name" name="name" placeholder="ישראל ישראלי" required aria-required="true" autocomplete="name">
@@ -933,6 +950,10 @@ function closeModal(){ document.getElementById("modal-overlay").classList.remove
     var grid  = document.querySelector('.services-grid');
     if (!foot || !stage || !grid) return;
 
+    // Real photo per domain (numbered 1..8 in svc-photos/). Domains without a
+    // photo fall back to the gold line-art motif.
+    var SVC_PHOTOS = { m1:1, m2:2, m3:3, m4:4, m5:5, m6:6, m7:7, m8:8 };
+
     var cards = grid.querySelectorAll('.svc[data-svc]');
     cards.forEach(function(card, i){
       var key = card.getAttribute('data-svc');
@@ -943,7 +964,13 @@ function closeModal(){ document.getElementById("modal-overlay").classList.remove
       var fig = document.createElement('figure');
       fig.className = 'svc-visual';
       fig.setAttribute('data-svc', key);
-      fig.innerHTML = '<div class="svc-visual-art">' + svcScene(motif, i) + '</div>'
+      var photo = SVC_PHOTOS[key];
+      var altText = title.replace(/"/g, '&quot;');
+      var art = photo
+        ? '<img class="svc-photo" src="svc-photos/' + photo + '.png" alt="' + altText + '" loading="lazy">'
+        : svcScene(motif, i);
+      if (photo) fig.classList.add('has-photo');
+      fig.innerHTML = '<div class="svc-visual-art">' + art + '</div>'
         + '<figcaption class="svc-visual-cap"><span>תחום התמחות</span><strong>' + title + '</strong></figcaption>';
       stage.appendChild(fig);
     });

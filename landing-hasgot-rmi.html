@@ -3,13 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Google Tag Manager - TODO: replace GTM-XXXXXXX -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
-<!-- End Google Tag Manager -->
+<!-- ===== GOOGLE ANALYTICS 4 (gtag.js) =====
+     Property "bor-miz.co.il", measurement ID G-GYNQPGPR33 - installed 2026-09-08,
+     replacing a Tag Manager placeholder that never had a container behind it.
+     The bridge below turns the site's existing dataLayer.push({event:'...'}) calls
+     (generate_lead / contact_whatsapp / contact_phone / intake_submitted) into GA4
+     events, so every call site elsewhere in the site stays untouched. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GYNQPGPR33"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'G-GYNQPGPR33');
+  (function(){
+    // gtag() itself pushes an arguments object, which has no .event key - so this
+    // never recurses on its own output.
+    var push = window.dataLayer.push;
+    window.dataLayer.push = function(){
+      for (var i = 0; i < arguments.length; i++) {
+        var o = arguments[i];
+        if (o && typeof o.event === 'string') {
+          var params = {};
+          for (var k in o) {
+            if (k !== 'event' && Object.prototype.hasOwnProperty.call(o, k)) params[k] = o[k];
+          }
+          gtag('event', o.event, params);
+        }
+      }
+      return push.apply(window.dataLayer, arguments);
+    };
+  })();
+</script>
+<!-- ===== END GOOGLE ANALYTICS 4 ===== -->
 <title>השגות על שומות רמ"י - הפחתת חיובים | בורוביץ מזרחי שמאות</title>
 <meta name="description" content="קיבלת שומה גבוהה מרשות מקרקעי ישראל? ניתן להגיש השגה תוך 60 יום ולהפחית משמעותית. שמאי מומחה בהשגות רמ&quot;י.">
 <meta name="keywords" content="השגה על שומת רמי, רשות מקרקעי ישראל, הפחתת שומה, שמאי מקרקעין, השגה רמי, ערעור שומה">
@@ -94,9 +119,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </style>
 </head>
 <body>
-<!-- Google Tag Manager (noscript) - TODO: replace GTM-XXXXXXX -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <nav class="landing-nav">
   <a href="https://bor-miz.co.il" class="nav-brand">
@@ -196,7 +218,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <h2>בדיקת שומה חינם</h2>
   <p>שלחו לנו את השומה שקיבלתם ונבדוק אם יש מקום להפחתה</p>
   <form class="contact-form" id="leadForm" onsubmit="submitForm(event)">
-    <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" />
+    <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);border:0;opacity:0" />
     <input type="text" name="name" placeholder="שם מלא" required />
     <input type="tel" name="phone" placeholder="טלפון" required />
     <input type="email" name="email" placeholder="אימייל" class="full" />

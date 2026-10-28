@@ -1,15 +1,41 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- ===== GOOGLE TAG MANAGER ===== -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
+<!-- ===== GOOGLE ANALYTICS 4 (gtag.js) =====
+     Property "bor-miz.co.il", measurement ID G-GYNQPGPR33 - installed 2026-09-08,
+     replacing a Tag Manager placeholder that never had a container behind it.
+     The bridge below turns the site's existing dataLayer.push({event:'...'}) calls
+     (generate_lead / contact_whatsapp / contact_phone / intake_submitted) into GA4
+     events, so every call site elsewhere in the site stays untouched. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GYNQPGPR33"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'G-GYNQPGPR33');
+  (function(){
+    // gtag() itself pushes an arguments object, which has no .event key - so this
+    // never recurses on its own output.
+    var push = window.dataLayer.push;
+    window.dataLayer.push = function(){
+      for (var i = 0; i < arguments.length; i++) {
+        var o = arguments[i];
+        if (o && typeof o.event === 'string') {
+          var params = {};
+          for (var k in o) {
+            if (k !== 'event' && Object.prototype.hasOwnProperty.call(o, k)) params[k] = o[k];
+          }
+          gtag('event', o.event, params);
+        }
+      }
+      return push.apply(window.dataLayer, arguments);
+    };
+  })();
+</script>
+<!-- ===== END GOOGLE ANALYTICS 4 ===== -->
 
 <title>קריירה - הצטרפו לצוות בורוביץ מזרחי שמאות מקרקעין</title>
 <meta name="description" content="מחפשים קריירה בעולם שמאות המקרקעין והחקלאות? בורוביץ מזרחי, משרד שמאות מוביל בצפון, מזמין שמאים, מתמחים ואנשי מקצוע מצטיינים להשתלב בצוות צומח. שלחו קורות חיים.">
@@ -40,7 +66,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="page.css">
 </head>
 <body>
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <a href="#main-content" class="skip-to-content">דלג לתוכן הראשי</a>
 
@@ -50,6 +75,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html#about" onclick="closeMenu()">אודות</a></li>
       <li><a href="index.html#services" onclick="closeMenu()">תחומי התמחות</a></li>
+      <li><a href="maamarim.html" onclick="closeMenu()">מאמרים</a></li>
       <li><a href="index.html#linkedin-posts" onclick="closeMenu()">עדכונים</a></li>
       <li><a href="index.html#success" onclick="closeMenu()">מהשטח</a></li>
       <li><a href="careers.html" onclick="closeMenu()">קריירה</a></li>
@@ -177,6 +203,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <ul>
           <li><a href="index.html#about">אודות</a></li>
           <li><a href="index.html#services">תחומי התמחות</a></li>
+          <li><a href="maamarim.html">מאמרים</a></li>
           <li><a href="index.html#success">תוצאות מהשטח</a></li>
           <li><a href="careers.html">קריירה</a></li>
         </ul>
